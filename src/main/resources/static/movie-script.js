@@ -2,6 +2,10 @@
 
     "use script";
 
+    if (document.querySelector("#username-field") == null) {
+        removeElementsIfUserIsNotLoggedIn();
+    }
+
     let usernameId = document.querySelector("#username-field").innerHTML;
     let movieId = document.querySelector("#movie-id").innerHTML;
     let userPreferredGenre = document.querySelector("#preferred-genre").innerHTML;
@@ -60,6 +64,10 @@
         document.querySelector("#three-star").addEventListener("click", updateThreeStarMovieRatingWithPatchRequest);
         document.querySelector("#four-star").addEventListener("click", updateFourStarMovieRatingWithPatchRequest);
         document.querySelector("#five-star").addEventListener("click", updateFiveStarMovieRatingWithPatchRequest);
+    }
+
+    if (document.querySelector("#review-panel").contains(document.querySelector("#remove-rating"))) {
+        document.querySelector("#remove-rating").addEventListener("click", removeRatingFromRatingsList);
     }
 
     function retrievePointValueOffUserObject (movieGenre) {
@@ -198,8 +206,30 @@
             .catch(alertUserMovieFailedToDelete);
     }
 
+    function removeRatingFromRatingsList() {
+        fetch("/movies/" + usernameId + "/delete/rating/" + movieId, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'}
+        }).then(alertUserRatingWasRemoved)
+            .catch(alertUserRatingWasNotRemoved);
+    }
+
+    function removeElementsIfUserIsNotLoggedIn() {
+        document.querySelector("#review-panel").innerHTML = "<p>Please log in to review this movie</p>";
+        document.querySelector("#favorites-panel").innerHTML = "<p>Please log in to add to favorites.</p>";
+
+    }
+
     function removeRatingElementsFromPage() {
         document.querySelector("#review-panel").innerHTML = "<p>Rating recorded.</p>";
+    }
+
+    function alertUserRatingWasRemoved() {
+        document.querySelector("#review-panel").innerHTML = "<p>Rating removed.</p>";
+    }
+
+    function alertUserRatingWasNotRemoved() {
+        document.querySelector("#review-panel").innerHTML = "<p>Rating failed to remove. Try again.</p>";
     }
 
     function alertUserOfFailedRatingFetch() {

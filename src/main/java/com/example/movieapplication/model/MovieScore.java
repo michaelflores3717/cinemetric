@@ -150,4 +150,6 @@ public class MovieScore {
     public void calculateFinalWeightedScore() {
         finalWeightedScore = (totalActualWeightedPoints / totalPossibleWeightedPoints) * 100;
     }
+
+
 }

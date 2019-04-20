@@ -75,6 +75,8 @@ public class MovieController {
             movies.save(movieObjectToAddToDB);
 
             model.addAttribute("movie", movieObjectToAddToDB);
+            model.addAttribute("isInUserFavoritesList", isInUserFavoritesList);
+            model.addAttribute("isInUserRatingsList", isInUserRatingsList);
             return "movie-page";
 
         } else {
@@ -93,13 +95,14 @@ public class MovieController {
 
             if (userWithRatingsList != null) {
                 for (MovieRating movieRating : userWithRatingsList.getMovieRatings()) {
-                    System.out.println("Movie Rating id " + movieRating.getMovieId());
-                    System.out.println("Id " + movieRating.getId());
+                    System.out.println(movieRating.getMovieId());
                     if (movieRating.getMovieId().equals(foundMovie.getId())) {
                         isInUserRatingsList = true;
                     }
                 }
             }
+
+            System.out.println(isInUserRatingsList);
 
             model.addAttribute("isInUserRatingsList", isInUserRatingsList);
             model.addAttribute("isInUserFavoritesList", isInUserFavoritesList);

@@ -5,11 +5,13 @@ import com.example.movieapplication.model.MovieRating;
 import com.example.movieapplication.model.MovieScore;
 import com.example.movieapplication.model.User;
 import com.example.movieapplication.service.MovieService;
+import com.example.movieapplication.service.RatingService;
 import com.example.movieapplication.service.UserDetailsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 //RESTFUL API
@@ -22,10 +24,12 @@ public class UserDBController {
     @Autowired
     private final MovieService movieService;
     private final UserDetailsLoader userDetailsLoader;
+    private final RatingService ratingService;
 
-    public UserDBController(MovieService movieService, UserDetailsLoader userDetailsLoader) {
+    public UserDBController(MovieService movieService, UserDetailsLoader userDetailsLoader, RatingService ratingService) {
         this.movieService = movieService;
         this.userDetailsLoader = userDetailsLoader;
+        this.ratingService = ratingService;
     }
 
     @GetMapping("/{movieId}")
@@ -77,7 +81,7 @@ public class UserDBController {
         if (updatingScore.getTotalPossibleWeightedPoints() != 0) movieScore.setTotalPossibleWeightedPoints(movieScore.getTotalPossibleWeightedPoints() + updatingScore.getTotalPossibleWeightedPoints());
         if (updatingScore.getTotalPossibleWeightedPoints() !=0) movieRating.setTotalPossibleWeightedPoints(updatingScore.getTotalPossibleWeightedPoints());
         if (updatingScore.getTotalActualWeightedPoints() != 0) movieScore.setTotalActualWeightedPoints(movieScore.getTotalActualWeightedPoints() + updatingScore.getTotalActualWeightedPoints());
-        if (updatingScore.getTotalActualWeightedPoints() != 0) movieRating.setTotalActualWeightedPoints(updatingScore.getTotalPossibleWeightedPoints());
+        if (updatingScore.getTotalActualWeightedPoints() != 0) movieRating.setTotalActualWeightedPoints(updatingScore.getTotalActualWeightedPoints());
 
         if (movieGenreMatch) {
             if (updatingScore.getTotalPossibleGenrePoints() != 0) movieScore.setTotalPossibleGenrePoints(movieScore.getTotalPossibleGenrePoints() + updatingScore.getTotalPossibleGenrePoints());
@@ -101,17 +105,42 @@ public class UserDBController {
     }
 
 
-    @PatchMapping("/test/{movieId}")
-    public ResponseEntity<Movie> update(@PathVariable Long movieId, @RequestBody Movie updatingMovie) {
-        Optional<Movie> movieOptional = movieService.findById(movieId);
-        if (!movieOptional.isPresent()) {
-            ResponseEntity.badRequest().build();
+    //THESE ARE TEST API METHODS. NOT TO BE USED IN APPLICATION
+
+    @GetMapping("test/{userId}")
+    public ResponseEntity<?> testyMcTesterson(@PathVariable String userId) {
+        User user = userDetailsLoader.loadUserWithRatingList(userId);
+        List<MovieRating> movieRatings = user.getMovieRatings();
+        for(MovieRating movieRating : movieRatings) {
+            System.out.println(movieRating.getMovieId());
         }
+        return ResponseEntity.ok("cool");
+    }
 
-        Movie movie = movieOptional.get();
-        if (updatingMovie.getTitle() != null) movie.setTitle(updatingMovie.getTitle());
-
-        return ResponseEntity.ok(movieService.save(movie));
+    @DeleteMapping("/test/{movieId}")
+    public ResponseEntity<?> testyMcTestersonsBrother(@PathVariable Long movieId) {
+        User user = userDetailsLoader.loadUserWithRatingList("travis");
+        List<MovieRating> movieRatings = user.getMovieRatings();
+        MovieRating movieRatingToDelete = null;
+        for (MovieRating movieRating : movieRatings) {
+            if (movieId.equals(movieRating.getMovieId())) {
+                System.out.println(movieRating.getMovieId());
+                movieRatingToDelete = movieRating;
+            }
+        }
+        user.removeFromUserRatingsList(movieRatingToDelete);
+        ratingService.delete(movieRatingToDelete);
+        System.out.println("movieRatings");
+        for (MovieRating movieRating : movieRatings) {
+            System.out.println(movieRating.getMovieId());
+        }
+        user.setMovieRatings(movieRatings);
+        System.out.println("userlist ratings");
+        for (MovieRating movieRating : user.getMovieRatings()) {
+            System.out.println(movieRating.getMovieId());
+        }
+        userDetailsLoader.saveUser(user);
+        return ResponseEntity.ok("cool");
     }
 
 }

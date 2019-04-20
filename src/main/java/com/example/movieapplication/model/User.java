@@ -172,6 +172,10 @@ public class User {
         movieRatings.add(movieRating);
     }
 
+    public void removeFromUserRatingsList(MovieRating movieRating) {
+        movieRatings.remove(movieRating);
+    }
+
     public void setPreferredGenreThroughArrayList() {
         int horrorCounter = 0;
         int dramaCounter = 0;

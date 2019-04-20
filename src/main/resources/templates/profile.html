@@ -5,11 +5,11 @@
     <title>Sign up</title>
 </head>
 <body>
-<h1 th:text="${user.email}"></h1>
 <h1 th:text="${user.username}"></h1>
-<!--<ul th:each="movie : ${testList}">-->
-    <!--<li th:text="*{movie.id}"></li>-->
-    <!--<li th:text="*{movie.title}"></li>-->
+<h2 th:text="${user.getPreferredGenre()}"></h2>
+<ul th:each="movie : *{movieList}">
+    <img th:src="@{'https://image.tmdb.org/t/p/w185' + ${movie.posterUrl}}">
+    <li th:text="*{movie.title}"></li>
 </ul>
 </body>
 </html>

@@ -7,3 +7,4 @@ public interface Movies extends CrudRepository<Movie, Long> {
 
     Movie findByTitle(String title);
 }
+

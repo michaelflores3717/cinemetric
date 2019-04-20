@@ -12,98 +12,26 @@
     <title>Sign up</title>
 </head>
 <body>
+<h1>Create an account</h1>
+<form th:action="@{/register}" method="POST" th:object="${user}">
+    <label for="username">Username</label>
+    <input id="username" th:field="*{username}" />
+    <div id="user-warning"></div>
 
-<!--   navbar   -->
+    <label for="email">Email</label>
+    <input id="email" type="email" th:field="*{email}" />
+    <div id="email-warning"></div>
 
-<nav class="conatiner-fluid sticky-top navbar navbar-light navbar-expand-lg bg-light">
-    <a class="navbar-brand" href="#">Filmster</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainNav">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-        </div>
-        <div class="col d-flex nav navbar-nav justify-content-end">
-            <a class="nav-link" href="#"><i class="fas fa-user"></i>
-                Sign up
-            </a>
-            <a class="nav-link" href="#">
-                <i class="fas fa-sign-in"></i>
-                Login
-            </a>
-        </div>
-    </div>
-</nav>
+    <label for="password">Password</label>
+    <input id="password" type="password" th:field="*{password}" />
+    <div id="password-warning"></div>
 
-<main class="container-fluid">
-    <header class="row">
-        <div class=" jumbotron jumbotron-fluid px-2">
-            <h1 class="col-12 d-flex justify-content-end display-1 ml-lg-auto">Filmster</h1>
-            <p class="col-12 d-flex  justify-content-end lead ml-lg-auto">A movie experience</p>
-        </div>
-    </header>
-    <h1 class="d-flex justify-content-center">Create an account</h1>
+    <label for="password-checker">Re-enter your password</label>
+    <input id="password-checker" type="password">
+    <div id="password-checker-warning"></div>
 
-    <!--   form   -->
-
-    <div class="container">
-        <form th:action="@{/register}" method="POST" th:object="${user}" class="my-5">
-
-            <div class="row">
-                <div class="col form-group">
-                    <label for="username"></label>
-                    <input id="username" class="form-control" type="text" th:field="*{username}" placeholder="username" aria-describedby="emailHelp"/>
-                    <small id="emailHelp" class="form-text text-muted">Create user name. This is what other will see.</small>
-                </div>
-                <div class="col form-group">
-                    <label for="email"></label>
-                    <input id="email" class="form-control" type="email" th:field="*{email}" placeholder="email" aria-describedby="userNameHelp"/>
-                    <small id="userNameHelp" class="form-text text-muted">You're info is safe with us!</small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col form-group">
-                    <label for="password"></label>
-                    <input id="password" class="form-control" type="password" th:field="*{password}" placeholder="password"/>
-                </div>
-                <div class="col form-group">
-                    <label for="confirm"></label>
-                    <input type="password" class="form-control" id="confirm" th:field="*{password}" placeholder="confirm password">
-                </div>
-
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="newsletter"  checked>
-                <label class="form-check-label" for="newsletter">Sign up for our newsletter!</label>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Sign me up!</button>
-            <!--<input value="Sign me up!" type="submit" class/>-->
-        </form>
-    </div>
-</main>
-
-<!--   footer   -->
-<footer class="row bg-dark">
-    <div class="col d-flex justify-content-center align-items-center text-light mb-0">
-        © 2019 Filmster. All right reserved
-    </div>
-    <div class="col d-flex justify-content-center align-items-center">
-        <a href="#" class="d-flex col">
-            <i class="fab fa-twitter fa-3x"></i>
-        </a>
-        <a href="#"class="col d-flex">
-            <i class="fab fa-facebook fa-3x"></i>
-        </a>
-        <a href="#"class="col d-flex">
-            <i class="fab fa-instagram fa-3x"></i>
-        </a>
-    </div>
-</footer>
-
-<!--   call js libraries   -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <input id="submit" value="Sign me up!" type="submit" disabled="disabled" />
+</form>
+<script type="text/javascript" th:src="@{/registration-script.js}"></script>
 </body>
 </html>

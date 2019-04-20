@@ -18,10 +18,19 @@
         </li>
     </ul>
 </nav>
-    <!--Logged user: <span sec:authentication="name">test</span>-->
+
+    User ID: <span id ="userId" th:text="${#authentication.principal.id}"/>
     Username: <span th:text="${#authentication.principal.username}"/>
-    <!--<span th:text="${user.email}"></span>-->
 </div>
 
-These are words
+<div id="currently-popular-movies">
+</div>
+
+<div id="searched-movies"></div>
+
+<input id="movie-search-field">
+<button id="movie-search">Search for movie</button>
+
+<script type="text/javascript" th:src="@{/script.js}"></script>
 </body>
+</html>

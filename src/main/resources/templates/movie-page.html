@@ -1,14 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8" />
     <title>Sign up</title>
 </head>
 <body>
-<h1 th:text="${movie.title}"></h1>
-<h2>Movie Score</h2>
-<h2 th:text="${movie.genre}"></h2>
+<div sec:authorize="isAuthenticated()">
+    <nav>
+        <ul>
+            <!-- More links here... -->
+            <li>
+                <form th:action="@{/logout}" th:method="post">
+                    <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+    <!--Logged user: <span sec:authentication="name">test</span>-->
+    Username: <span id="username-field" th:text="${#authentication.principal.username}"></span>
+    User Preferred Genre: <span id="preferred-genre" th:text="${user.getPreferredGenre()}"></span>
+    Horror points: <span id="horror-points" th:text="${user.getHorrorPoints()}"></span>
+    Drama points: <span id="drama-points" th:text="${user.getDramaPoints()}"></span>
+    Comedy points: <span id="comedy-points" th:text="${user.getComedyPoints()}"></span>
+    SciFi points: <span id="scifi-points" th:text="${user.getSciFiPoints()}"></span>
+    Romance points: <span id="romance-points" th:text="${user.getRomancePoints()}"></span>
+    Misc points: <span id="misc-points" th:text="${user.getMiscPoints()}"></span>
+</tr>
+    <!--<span th:text="${user.email}"></span>-->
+</div>
+<h1 th:text="${movie.title}">movie title</h1>
+<h6 id = "movie-id" th:text="${movie.id}" hidden></h6>
+Overall Score: <h2 th:text="${movie.movieScore.finalScore}">Movie Score</h2>
+Genre Score: <h2 th:text="${movie.movieScore.finalGenreScore}">Movie Score</h2>
+Weighted Score: <h2 th:text="${movie.movieScore.finalWeightedScore}">Movie Score</h2>
+<div id="review-warning"></div>
+<div id="review-panel" th:switch="${isInUserRatingsList}">
+    <div th:case="false">
+        <button id="one-star">1 star</button>
+        <button id="two-star">2 star</button>
+        <button id="three-star">3 star</button>
+        <button id="four-star">4 star</button>
+        <button id="five-star">5 star</button>
+    </div>
+    <div th:case="true">
+        <p>Rating already added</p>
+        <button id="remove-rating">Remove rating</button>
+    </div>
+</div>
+<h2 id = "movie-genre" th:text="${movie.genre}">movie genre</h2>
 <p th:text="${movie.description}"></p>
+<img th:src="@{'https://image.tmdb.org/t/p/w185' + ${movie.posterUrl}}">
+<div id="favorites-warning"></div>
+<div id="favorites-panel" th:switch="${isInUserFavoritesList}">
+    <div th:case="false">
+        <button id="add-to-favorites">Add to favorites list</button>
+    </div>
+    <div th:case="true">
+        <p>Movie already added.</p>
+        <button id="delete-from-favorites">Remove movie from favorites</button>
+    </div>
+</div>
 
+<script type="text/javascript" th:src="@{/movie-script.js}"></script>
 </body>
 </html>

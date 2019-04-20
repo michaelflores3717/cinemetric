@@ -1,18 +1,19 @@
 package com.example.movieapplication.model;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="movie_score")
-public class MovieScore {
+@Table(name="ratings")
+public class MovieRating {
 
     @Id
-    @Column(name="score_id")
     @GeneratedValue
     private Long id;
 
     @Column
-    private double finalScore;
+    private Long movieId;
 
     @Column
     private double totalPossiblePoints;
@@ -21,16 +22,10 @@ public class MovieScore {
     private double totalActualPoints;
 
     @Column
-    private double finalGenreScore;
-
-    @Column
     private double totalPossibleGenrePoints;
 
     @Column
     private double totalActualGenrePoints;
-
-    @Column
-    private double finalWeightedScore;
 
     @Column
     private double totalPossibleWeightedPoints;
@@ -38,43 +33,27 @@ public class MovieScore {
     @Column
     private double totalActualWeightedPoints;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "movie_score_join", nullable = false)
-    private Movie movie;
+    @ManyToOne
+    @JoinColumn(name = "user_rating")
+    private User user;
 
-    public MovieScore() {
-        finalScore = 0;
-        finalGenreScore = 0;
-    }
-
-    public MovieScore(Movie movie){
-        finalScore = 0;
-        finalGenreScore = 0;
-        this.movie = movie;
+    public MovieRating() {
     }
 
     public Long getId() {
         return id;
     }
 
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public double getFinalScore() {
-        return finalScore;
+    public Long getMovieId() {
+        return movieId;
     }
 
-    public void setFinalScore(double finalScore) {
-        this.finalScore = finalScore;
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 
     public double getTotalPossiblePoints() {
@@ -93,12 +72,8 @@ public class MovieScore {
         this.totalActualPoints = totalActualPoints;
     }
 
-    public double getFinalGenreScore() {
-        return finalGenreScore;
-    }
-
-    public void setFinalGenreScore(double finalGenreScore) {
-        this.finalGenreScore = finalGenreScore;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public double getTotalPossibleGenrePoints() {
@@ -117,20 +92,6 @@ public class MovieScore {
         this.totalActualGenrePoints = totalActualGenrePoints;
     }
 
-    public void calculateFinalScore() {
-        finalScore = (totalActualPoints/totalPossiblePoints) * 100;
-    }
-
-    public void calculateFinalGenreScore() { finalGenreScore = (totalActualGenrePoints/totalPossibleGenrePoints) * 100; }
-
-    public double getFinalWeightedScore() {
-        return finalWeightedScore;
-    }
-
-    public void setFinalWeightedScore(double finalWeightedScore) {
-        this.finalWeightedScore = finalWeightedScore;
-    }
-
     public double getTotalPossibleWeightedPoints() {
         return totalPossibleWeightedPoints;
     }
@@ -145,9 +106,5 @@ public class MovieScore {
 
     public void setTotalActualWeightedPoints(double totalActualWeightedPoints) {
         this.totalActualWeightedPoints = totalActualWeightedPoints;
-    }
-
-    public void calculateFinalWeightedScore() {
-        finalWeightedScore = (totalActualWeightedPoints / totalPossibleWeightedPoints) * 100;
     }
 }

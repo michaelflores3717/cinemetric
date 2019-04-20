@@ -1,13 +1,14 @@
 package com.example.movieapplication.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="movies")
 public class Movie {
 
     @Id
-    @GeneratedValue
     @Column(name = "movie_id")
     private Long id;
 
@@ -20,17 +21,35 @@ public class Movie {
     @Column
     private String genre;
 
-    @Transient
-    private MovieScore movieScore;
+    @Column
+    private String posterUrl;
 
+    @ManyToMany(mappedBy = "userMovieList")
+    private List<User> users = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "movie")
+    private MovieScore movieScore;
 
     public Movie () {
     }
 
-    public Movie(String title, String description, String genre) {
+    public Movie(Long id, String title, String description, String genre, String posterUrl) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.genre = genre;
+        this.posterUrl = posterUrl;
+
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
     public Long getId() {
@@ -72,4 +91,5 @@ public class Movie {
     public void setMovieScore(MovieScore movieScore) {
         this.movieScore = movieScore;
     }
+
 }

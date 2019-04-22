@@ -8,30 +8,105 @@
     <!--   link to style sheets   -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link href="../static/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
-    <title>Sign up</title>
+    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet" />
+    <title>Register for Cinemetric</title>
 </head>
 <body>
-<h1>Create an account</h1>
-<form th:action="@{/register}" method="POST" th:object="${user}">
-    <label for="username">Username</label>
-    <input id="username" th:field="*{username}" />
-    <div id="user-warning"></div>
 
-    <label for="email">Email</label>
-    <input id="email" type="email" th:field="*{email}" />
-    <div id="email-warning"></div>
 
-    <label for="password">Password</label>
-    <input id="password" type="password" th:field="*{password}" />
-    <div id="password-warning"></div>
 
-    <label for="password-checker">Re-enter your password</label>
-    <input id="password-checker" type="password">
-    <div id="password-checker-warning"></div>
 
-    <input id="submit" value="Sign me up!" type="submit" disabled="disabled" />
-</form>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">c i n e m e t r i c</span>
+    </nav>
+
+    <div class="container">
+    <div id="form-wrapper" class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Register for cinemetric</div>
+                <div class="card-body">
+
+                    <form class="form-horizontal" th:action="@{/register}" method="POST" th:object="${user}">
+
+                        <div class="form-group">
+                            <label for="username" class="cols-sm-2 control-label">username</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="enter your username" />
+                                </div>
+                                <div id="user-warning"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">email</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" th:field="*{email}" id="email" placeholder="enter your email" />
+                                </div>
+                                <div id="email-warning"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="cols-sm-2 control-label">password</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                    <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="enter your password" />
+                                </div>
+                                <div id="password-warning"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password-checker" class="cols-sm-2 control-label">re-enter password</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                    <input type="password" class="form-control" id="password-checker" placeholder="confirm your password" />
+                                </div>
+                                <div id="password-checker-warning"></div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <button type="submit" id="submit" class="btn btn-outline-dark btn-lg btn-block login-button" disabled="disabled">Register</button>
+                        </div>
+                        <div class="login-register">
+                            <a href="/login">Login</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+<!--<h1>Create an account</h1>-->
+<!--<form th:action="@{/register}" method="POST" th:object="${user}">-->
+    <!--<label for="username">Username</label>-->
+    <!--<input id="username" th:field="*{username}" />-->
+    <!--<div id="user-warning"></div>-->
+
+    <!--<label for="email">Email</label>-->
+    <!--<input id="email" type="email" th:field="*{email}" />-->
+    <!--<div id="email-warning"></div>-->
+
+    <!--<label for="password">Password</label>-->
+    <!--<input id="password" type="password" th:field="*{password}" />-->
+    <!--<div id="password-warning"></div>-->
+
+    <!--<label for="password-checker">Re-enter your password</label>-->
+    <!--<input id="password-checker" type="password">-->
+    <!--<div id="password-checker-warning"></div>-->
+
+    <!--<input id="submit" value="Sign me up!" type="submit" disabled="disabled" />-->
+<!--</form>-->
 <script type="text/javascript" th:src="@{/registration-script.js}"></script>
 </body>
 </html>

@@ -44,27 +44,27 @@
 
     function declareUsernameAsValidIfDoesNotExistInDB(data) {
         if (usernameField.value.length < 6 || usernameField.value.length > 20) {
-            userWarning.innerHTML = "<p>Username must be between 6 and 20 characters.</p>";
+            userWarning.innerHTML = "<p class='text-danger'>Username must be between 6 and 20 characters!</p>";
             usernameIsValid = false;
         } else if (data) {
-            userWarning.innerHTML = "<p>Username already exists!</p>"
+            userWarning.innerHTML = "<p class='text-danger'>Username already exists!</p>"
             usernameIsValid = false;
         } else if (!data) {
-            userWarning.innerHTML = "<p>Username is looking good</p>";
+            userWarning.innerHTML = "<p class='text-success'>Username is looking good.</p>";
             usernameIsValid = true;
         }
     }
 
     function declareEmailAsValidIfDoesNotExistInDB(data) {
         if (!validateEmail(emailField.value)) {
-            emailWarning.innerHTML = "<p>Email needs to be in correct format.</p>";
+            emailWarning.innerHTML = "<p class='text-danger'>Email needs to be in correct format!</p>";
             emailIsValid = false;
         } else if (data) {
             console.log(data);
-            emailWarning.innerHTML = "<p>Email already exists</p>";
+            emailWarning.innerHTML = "<p class='text-danger'>Email already exists!</p>";
             emailIsValid = false;
         } else if (validateEmail(emailField.value) && !data) {
-            emailWarning.innerHTML = "<p>Email looks a-okay</p>";
+            emailWarning.innerHTML = "<p class='text-success'>Email looks a-okay.</p>";
             emailIsValid = true;
         }
 
@@ -72,10 +72,10 @@
 
     function declarePasswordValidIfValid() {
         if (passwordField.value.length < 6 || passwordField.value.length > 20) {
-            passwordWarning.innerHTML = "<p>Password needs to be between 6 and 20 characters</p>"
+            passwordWarning.innerHTML = "<p class='text-danger'>Password needs to be between 6 and 20 characters!</p>"
             passwordIsValid = false;
         } else if (passwordField.value.length >= 6 && passwordField.value.length < 20) {
-            passwordWarning.innerHTML = "<p>Password length looks about right</p>"
+            passwordWarning.innerHTML = "<p class='text-success'>Password length looks about right.</p>"
             passwordIsValid = true;
         }
 
@@ -83,10 +83,10 @@
 
     function declarePasswordsMatchIfMatch() {
         if (passwordField.value === passwordFieldChecker.value) {
-            passwordCheckerWarning.innerHTML = "<p>Passwords match!</p>";
+            passwordCheckerWarning.innerHTML = "<p class='text-success'>Passwords match.</p>";
             passwordsMatch = true;
         } else if (passwordField.value !== passwordFieldChecker.value) {
-            passwordCheckerWarning.innerHTML = "<p>Passwords don't match</p>";
+            passwordCheckerWarning.innerHTML = "<p class='text-danger'>Passwords don't match!</p>";
             passwordsMatch = false;
         }
 

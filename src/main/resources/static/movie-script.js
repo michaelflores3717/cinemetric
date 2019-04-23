@@ -18,33 +18,12 @@
     let userMiscPointValue = document.querySelector("#misc-points").innerHTML;
     let actualUserPointValue = 0;
     let movieGenreMatch = false;
-    // let movieExistsInUserFavorites = false;
-    // let movieExistsInUserRatings = false;
-
 
     retrievePointValueOffUserObject(movieGenre);
 
     if (userPreferredGenre === movieGenre) {
         movieGenreMatch = true;
     }
-
-
-    // checkIfMovieExistsInUserFavorites();
-    // checkIfMovieExistsInUserRatings();
-
-    //need to refactor the below functions to construct the rating and favorite buttons after the timeout concludes
-
-    // setTimeout(function() {
-    //     if (movieExistsInUserFavorites) {
-    //         removeFavoritesButtonFromPage();
-    //     }
-    // }, 250);
-
-    // setTimeout(function() {
-    //     if (movieExistsInUserRatings) {
-    //         removeRatingElementsFromPage();
-    //     }
-    // }, 250);
 
     // FAVORITES PANEL
 
@@ -180,22 +159,6 @@
         }).then(removeRatingElementsFromPage)
             .catch(alertUserOfFailedRatingFetch);
     }
-
-    // function checkIfMovieExistsInUserFavorites() {
-    //     fetch(usernameId + "/get/" + movieId).then((response) => {
-    //         response.json().then(data  => {
-    //             movieExistsInUserFavorites = data;
-    //         })
-    //     })
-    // }
-
-    // function checkIfMovieExistsInUserRatings() {
-    //     fetch(usernameId + "/get/" + movieId + "/rating").then(response => {
-    //         response.json().then(data => {
-    //             movieExistsInUserRatings = data;
-    //         })
-    //     })
-    // }
 
     function deleteMovieFromFavorites() {
         console.log("hello");

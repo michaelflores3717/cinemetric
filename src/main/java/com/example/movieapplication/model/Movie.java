@@ -1,5 +1,7 @@
 package com.example.movieapplication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class Movie {
     @ManyToMany(mappedBy = "userMovieList")
     private List<User> users = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
             mappedBy = "movie")

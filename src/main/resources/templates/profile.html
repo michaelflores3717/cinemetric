@@ -1,15 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+    <title>Profile</title>
     <meta charset="UTF-8" />
-    <title>Sign up</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <!--   link to style sheets   -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="../static/styles.css" th:href="@{/profile-styles.css}" rel="stylesheet" />
 </head>
 <body>
-<h1 th:text="${user.username}"></h1>
-<h2 th:text="${user.getPreferredGenre()}"></h2>
-<ul th:each="movie : *{movieList}">
-    <img th:src="@{'https://image.tmdb.org/t/p/w185' + ${movie.posterUrl}}">
-    <li th:text="*{movie.title}"></li>
+<div sec:authorize="isAuthenticated()">
+    <nav>
+        <ul>
+            <!-- More links here... -->
+            <li>
+                <form th:action="@{/logout}" th:method="post">
+                    <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+    <!--Logged user: <span sec:authentication="name">test</span>-->
+    Username: <span id="username-field" th:text="${#authentication.principal.username}"></span>
+    User Preferred Genre: <span id="preferred-genre" th:text="${user.getPreferredGenre()}"></span>
+    Horror points: <span id="horror-points" th:text="${user.getHorrorPoints()}"></span>
+    Drama points: <span id="drama-points" th:text="${user.getDramaPoints()}"></span>
+    Comedy points: <span id="comedy-points" th:text="${user.getComedyPoints()}"></span>
+    SciFi points: <span id="scifi-points" th:text="${user.getSciFiPoints()}"></span>
+    Romance points: <span id="romance-points" th:text="${user.getRomancePoints()}"></span>
+    Misc points: <span id="misc-points" th:text="${user.getMiscPoints()}"></span>
+    </tr>
+    <!--<span th:text="${user.email}"></span>-->
+</div>
+<!--<h1 th:text="${user.username}"></h1>-->
+<!--<h2 th:text="${user.getPreferredGenre()}"></h2>-->
+<!--<ul th:each="movie : *{movieList}">-->
+    <!--<img th:src="@{'https://image.tmdb.org/t/p/w185' + ${movie.posterUrl}}">-->
+    <!--<li th:text="*{movie.title}"></li>-->
+<!--</ul>-->
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="true">User Info</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="liked-movies-tab" data-toggle="tab" href="#liked-movies" role="tab" aria-controls="liked-movies" aria-selected="false">Liked Movies</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="reviewed-movies-tab" data-toggle="tab" href="#reviewed-movies" role="tab" aria-controls="reviewed-movies" aria-selected="false">Reviewed Movies</a>
+    </li>
 </ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="user" role="tabpanel" aria-labelledby="user-tab">user</div>
+    <div class="tab-pane" id="liked-movies" role="tabpanel" aria-labelledby="liked-movies-tab">
+        <ul th:each="movie : *{movieList}">
+            <a th:href="@{'/movies/' + ${movie.id}}">
+                <img th:src="@{'https://image.tmdb.org/t/p/w185' + ${movie.posterUrl}}">
+            </a>
+        </ul>
+    </div>
+    <div class="tab-pane" id="reviewed-movies" role="tabpanel" aria-labelledby="reviewed-movies-tab">...</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/profile-script.js}"></script>
 </body>
 </html>

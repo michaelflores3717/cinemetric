@@ -146,4 +146,14 @@ public class MoviesDBController {
 
         return ResponseEntity.ok("Movie rating removed");
     }
+
+    @GetMapping("favorites/{userId}")
+    public ResponseEntity<List<Movie>> returnFavoritesMoviesList(@PathVariable String userId) {
+        User user = userDetailsLoader.loadUserWithMovieList(userId);
+        List<Movie> movieList = user.getUserMovieList();
+        for (Movie movie : movieList) {
+            System.out.println(movie.getTitle());
+        }
+        return ResponseEntity.ok(movieList);
+    }
 }

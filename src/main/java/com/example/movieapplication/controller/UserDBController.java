@@ -114,7 +114,7 @@ public class UserDBController {
         for(MovieRating movieRating : movieRatings) {
             System.out.println(movieRating.getMovieId());
         }
-        return ResponseEntity.ok("cool");
+        return ResponseEntity.ok("cool beans");
     }
 
     @DeleteMapping("/test/{movieId}")
